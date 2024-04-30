@@ -61,3 +61,5 @@ while True:
         break
     else:
         print("You did not enter a number 1-4, please try again.")
+
+cursor.close()
