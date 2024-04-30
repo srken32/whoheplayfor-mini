@@ -8,7 +8,6 @@ pw = getpass.getpass("Enter password: ")
 dsn_tns = cx_Oracle.makedsn('csdb.csc.villanova.edu', '1521', 'orcl')
 
 connection = oracledb.connect(
-    #user="skenney",
     user = u,
     password= pw,
     dsn=dsn_tns)
