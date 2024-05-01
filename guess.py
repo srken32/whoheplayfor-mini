@@ -20,13 +20,17 @@ score = 0
 while True:
     table = input("Enter number 1-4, 1 for players, 2 for coaches, 3 for mascots, 4 to end game: ")
     team = ''
+    location = ''
     if table == '1':
         cursor.execute('select * from (select * from player order by dbms_random.value) where rownum = 1')
         for row in cursor:
             team = row[2]
             print('What team does he play for? Name:',  row[0], row[1], 'Number:', row[3], 'Age:', row[4], 'Height (in):', row[5])
-        guess = input("Guess the team name here (no location, caps sensitive):")
-        if guess == team:
+        guess = input("Guess the team here (caps sensitive):")
+        cursor.execute("select location from Team where name = :t", t = team)
+        for row in cursor:
+            location = row[0]
+        if guess == team or guess == location or guess == (location + " " + team):
             score += 1
             print("You got it! Score:", score)
         else:
@@ -37,8 +41,11 @@ while True:
         for row in cursor:
             team = row[2]
             print('What team do they coach? Name:',  row[0], row[1], 'Age:', row[3])
-        guess = input("Guess the team name here (no location, caps sensitive):")
-        if guess == team:
+        guess = input("Guess the team here (caps sensitive):")
+        cursor.execute("select location from Team where name = :t", t = team)
+        for row in cursor:
+            location = row[0]
+        if guess == team or guess == location or guess == (location + " " + team):
             score += 1
             print("You got it! Score:", score)
         else:
@@ -49,8 +56,11 @@ while True:
         for row in cursor:
             team = row[1]
             print('What team do they work for? Name:',  row[0], 'Type:', row[2])
-        guess = input("Guess the team name here (no location, caps sensitive):")
-        if guess == team:
+        guess = input("Guess the team here (caps sensitive):")
+        cursor.execute("select location from Team where name = :t", t = team)
+        for row in cursor:
+            location = row[0]
+        if guess == team or guess == location or guess == (location + " " + team):
             score += 1
             print("You got it! Score:", score)
         else:
